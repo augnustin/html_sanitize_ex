@@ -8,8 +8,7 @@ defmodule HtmlSanitizeEx.Scrubber do
   end
 
   def scrub(html, scrubber_module) do
-    html
-    |> scrubber_module.before_scrub
+    if scrubber_module, do: scrubber_module.before_scrub(html), else: html
     |> HtmlSanitizeEx.Parser.parse()
     |> HtmlSanitizeEx.Traverser.traverse(scrubber_module)
     |> HtmlSanitizeEx.Parser.to_html()
